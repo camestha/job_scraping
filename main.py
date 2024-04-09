@@ -16,9 +16,7 @@ chrome_options = Options()
 #chrome_options.add_argument("--headless")
 #chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.88 Safari/537.36")
 chrome_options.add_argument("--ignore-certificate-errors")
-
 driver = webdriver.Chrome(service=service, options=chrome_options)
-
 driver.get("https://jobs.man-es.com/go/us_Job-Portal/4382201/")
 
 try:
@@ -38,14 +36,16 @@ except Exception as e:
 #fct_dropdown = driver.find_element(By.ID, "optionsFacetsDD_customfield2")
 #fct_select = Select(fct_dropdown)
 #fct_select.select_by_value("Engineering")
+
+# Programmed Inputs
+
 input_keywords = WebDriverWait(driver, 10).until(
     EC.element_to_be_clickable((By.CLASS_NAME, "keywordsearch-q.columnized-search")))
 input_keywords.clear()
 input_keywords.send_keys(keywords + Keys.ENTER)
 
-#jobs = driver.find_elements(By.CLASS_NAME, "jobTitle-link.fontcolora880bb1b")
+# Search for elements
 
-#jobs = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "jobTitle-link.fontcolora880bb1b")))
 try:
     jobs = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.jobTitle-link.fontcolora880bb1b"))
@@ -59,7 +59,6 @@ try:
 
 except Exception as e:
     print("Failed to find job elements:", e)
-
 
 time.sleep(10) 
 driver.quit()
